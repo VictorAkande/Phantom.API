@@ -3,8 +3,8 @@
     public class AuthorizationRoot
     {
         public DateTimeOffset? CreatedDate { get; set; } = DateTimeOffset.Now;
-        public DateTimeOffset UpdatedDate { get; set; } 
-        public string AuthorizedBy { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
+        public string AuthorizedBy { get; set; } = "system";
         public bool isAuthorized { get; set; } = false;
 
     }

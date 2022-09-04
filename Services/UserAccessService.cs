@@ -56,8 +56,17 @@ namespace Phantom.API.Services
                     byte[] hashP = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(model.Password));
                     account.PasswordHash = hashP.ToString();
                 }
+                account.OTP = "0786";
+                account.AuthorizedBy = "system";
+                account.OTPExpiry = DateTimeOffset.Now;
+                account.isAuthorized = false;
+                account.isVerified = false;
+                account.UpdatedDate = DateTimeOffset.Now;
+                account.ResetToken = "";
+                account.LastPasswordChange = DateTimeOffset.Now;
+                account.VerificationToken = "";
 
-                var saveuser =  _accessRepository.CreateCustomerAccountAsync(account);
+                var saveuser = await _accessRepository.CreateCustomerAccountAsync(account);
                 if (saveuser == null)
                 {
                     return await _baseResponse.CustomErroMessage("Customer creation failed. Try again later!","400");

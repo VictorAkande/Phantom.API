@@ -22,7 +22,7 @@ namespace Phantom.API.Repository
                 }
 
                 await _context.Customers.AddAsync(account);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
 
                 return account;
 
@@ -44,9 +44,9 @@ namespace Phantom.API.Repository
                 var emailExist = _context.Customers.Where(x => x.Email == email).FirstOrDefault();
                 if (emailExist == null)
                 {
-                    return true;
+                    return false;
                 }
-                return false;
+                return true;
             }
             catch (Exception)
             {
@@ -61,9 +61,9 @@ namespace Phantom.API.Repository
                 var numberExist = _context.Customers.Where(x => x.WhatsappNumber == whatsappNumber).FirstOrDefault();
                 if (numberExist == null)
                 {
-                    return true;
+                    return false;
                 }
-                return false;
+                return true;
             }
             catch (Exception)
             {

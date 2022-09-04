@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phantom.API.Context;
 
@@ -11,9 +12,10 @@ using Phantom.API.Context;
 namespace Phantom.API.Migrations
 {
     [DbContext(typeof(PhantomDbContext))]
-    partial class PhantomDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220903231401_update3")]
+    partial class update3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace Phantom.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDefaultPassword")
+                    b.Property<bool>("IsDefaultPassword")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LastLoginDate")
@@ -62,6 +64,7 @@ namespace Phantom.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OTP")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("OTPExpiry")
@@ -71,9 +74,11 @@ namespace Phantom.API.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResetToken")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("ResetTokenExpiration")
@@ -83,9 +88,10 @@ namespace Phantom.API.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("VerificationToken")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("VerificationTokenExpiration")
+                    b.Property<DateTimeOffset>("VerificationTokenExpiration")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("WhatsappNumber")
@@ -95,7 +101,7 @@ namespace Phantom.API.Migrations
                     b.Property<bool>("isAuthorized")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("isVerified")
+                    b.Property<bool>("isVerified")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

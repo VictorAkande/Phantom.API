@@ -25,14 +25,14 @@ namespace Phantom.API.Controllers
 
         public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCustomerDto model)
         {
-            if (!ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
             {
-
+                return StatusCode(400, await _baseResponse.CustomErroMessage("400","Paramaeters Cannot be Empty"));
             }
 
-            var createUser = _userAccessService.RegisterCustomer(model);
+            var createUser = await _userAccessService.RegisterCustomer(model);
 
-            return StatusCode(201,createUser);
+            return StatusCode(201, createUser);
         }
         
     }

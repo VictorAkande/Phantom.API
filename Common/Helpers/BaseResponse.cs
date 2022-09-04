@@ -4,11 +4,6 @@
     {
         public Task<BaseResponseVm<T>> CustomErroMessage(string msg, string code)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<BaseResponseVm<T>> CustomMessage(string msg, string code)
-        {
             try
             {
                 var res = new BaseResponseVm<T>()
@@ -28,6 +23,8 @@
                 return Task.FromResult(new BaseResponseVm<T>());
             }
         }
+
+       
 
         public Task<BaseResponseVm<T>> InternalServerError()
         {
