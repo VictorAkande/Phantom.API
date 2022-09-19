@@ -6,5 +6,6 @@ namespace Phantom.API.IServices
     public interface IUserAccessService
     {
         Task<BaseResponseVm<object>> RegisterCustomer(RegisterCustomerDto model);
+        Task<BaseResponseVm<object>> ResetPassword(PasswordResetDto model, string token);
     }
 }

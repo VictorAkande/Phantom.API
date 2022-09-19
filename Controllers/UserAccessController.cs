@@ -34,6 +34,21 @@ namespace Phantom.API.Controllers
 
             return StatusCode(201, createUser);
         }
-        
+
+        [HttpPost]
+        [Route("ForgotPassword/{token}")]
+
+        public async Task<IActionResult> ForgotPassword([FromRoute] string token, [FromBody] PasswordResetDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
+            }
+
+            var reset = await _userAccessService.ResetPassword(model, token);
+
+            return StatusCode(201, reset);
+        }
+
     }
 }

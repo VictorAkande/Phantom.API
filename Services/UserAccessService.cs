@@ -81,5 +81,41 @@ namespace Phantom.API.Services
                 return await Task.FromResult(new BaseResponseVm<object>());
             }
         }
+
+        public async Task<BaseResponseVm<object>> ResetPassword(PasswordResetDto model, string token)
+        {
+            try
+            {
+
+                if (model.NewPassword != model.ConfirmPassword)
+                {
+                    return await _baseResponse.CustomErroMessage("The Passwords does not match", "400");
+                }
+
+                var EmailExist = _accessRepository.EmailExist(model.Email);
+
+                if (!EmailExist)
+                {
+                    return await _baseResponse.CustomErroMessage("Account Does Not Exist", "400");
+                }
+
+                //vallidate token 
+                var validateToken = _accessRepository.ValidateToken(token);
+                if (!validateToken)
+                {
+                    return await _baseResponse.CustomErroMessage("Invalid Token", "400");
+                }
+
+                var reset = _accessRepository.CreateNewPassword(model.NewPassword);
+
+                return await _baseResponse.CustomErroMessage("Registration Successful.", "201");
+
+            }
+            catch (Exception)
+            {
+
+                return await Task.FromResult(new BaseResponseVm<object>());
+            }
+        }
     }
 }
