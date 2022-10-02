@@ -20,13 +20,10 @@ namespace Phantom.API.Repository
                 {
                     return null;
                 }
-
                 await _context.Customers.AddAsync(account);
                 _context.SaveChanges();
 
                 return account;
-
-
 
             }
             catch (Exception)

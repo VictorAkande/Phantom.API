@@ -22,6 +22,7 @@ namespace Phantom.API.Model
         public DateTimeOffset? PasswordChangeDate { get; set; }
         public bool? isVerified { get; set; }
         public bool? IsDefaultPassword { get; set; } = false;
+        public string ReferralId { get; set; } = string.Empty;
 
         //public long AgentAccountId { get; set; }
         //public virtual AgentAccount AgentAccount { get; set; }
