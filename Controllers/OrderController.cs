@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Phantom.API.Common.Helpers;
 using Phantom.API.IServices;
-using Phantom.API.Model;
 using Phantom.API.Model.Dto;
 
 namespace Phantom.API.Controllers
@@ -22,7 +20,7 @@ namespace Phantom.API.Controllers
 
         [HttpPost]
         [Route("PlaceOrder")]
-        public async Task<IActionResult> MakeOrder([FromForm] OrderDto model )
+        public async Task<IActionResult> MakeOrder([FromForm] OrderDto model)
         {
 
             if (model == null || !ModelState.IsValid)
@@ -31,7 +29,7 @@ namespace Phantom.API.Controllers
             }
 
             //
-            
+
             var createOrder = await _orderService.MakeOrder(model.OrderImage, model.size);
 
             return StatusCode(201, createOrder);
@@ -39,7 +37,23 @@ namespace Phantom.API.Controllers
 
         [HttpPost]
         [Route("TrackOrder")]
-        public async Task<IActionResult> TrackOrder([FromBody] string orderCode)
+        public async Task<IActionResult> TrackOrder([FromBody] TrackOrderDto model)
+        {
+
+            if (model == null || !ModelState.IsValid)
+            {
+                return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
+            }
+
+
+            var createOrder = await _orderService.TrackOrder(model.OrderCode);
+
+            return StatusCode(201, createOrder);
+        }
+
+        [HttpPost]
+        [Route("CancelOrder")]
+        public async Task<IActionResult> CancelOrder([FromBody] string orderCode)
         {
 
             if (orderCode == null || !ModelState.IsValid)
@@ -47,7 +61,6 @@ namespace Phantom.API.Controllers
                 return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
             }
 
-            //
 
             var createOrder = await _orderService.TrackOrder(orderCode);
 

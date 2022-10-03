@@ -24,7 +24,7 @@
             }
         }
 
-       
+
 
         public Task<BaseResponseVm<T>> InternalServerError()
         {
@@ -55,6 +55,7 @@
                 var res = new BaseResponseVm<T>()
                 {
                     code = code ?? "200",
+                    Message = "Success",
                     Successful = true,
                     data = (T)data
 

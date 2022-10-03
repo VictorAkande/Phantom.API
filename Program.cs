@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using NLog;
 using Phantom.API.Common.Helpers;
 using Phantom.API.Context;
 using Phantom.API.IRepository;
@@ -20,9 +19,11 @@ builder.Services.AddSwaggerGen();
 var config = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new UserAccessMapping());
+    cfg.AddProfile(new OrderMapping());
 });
 
 var mapper = config.CreateMapper();
+
 
 builder.Services.AddSingleton(mapper);
 

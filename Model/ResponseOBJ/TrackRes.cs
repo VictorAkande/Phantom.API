@@ -1,26 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Phantom.API.Model
+﻿namespace Phantom.API.Model.ResponseOBJ
 {
-    public class Order
+    public class TrackRes
     {
-        [Key]
-        public int OrderId { get; set; }
-        [Required]
         public string? OrderImage { get; set; }
-        [Required]
         public string OrderCode { get; set; }
         public string? OrderStatus { get; set; }
-        [Required]
         public DateTimeOffset DayOfDelivery { get; set; }
-
-        [Required]
+        public string DeliveryDay { get; set; }
         public DateTimeOffset OrderDate { get; set; }
-        [Required]
         public decimal Price { get; set; }
-
         public string size { get; set; }
         public int CustomerId { get; set; }
-
     }
 }
