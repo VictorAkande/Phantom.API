@@ -67,6 +67,7 @@ namespace Phantom.API.Services
                 account.VerificationToken = "";
 
                 var saveuser = await _accessRepository.CreateCustomerAccountAsync(account);
+
                 if (saveuser == null)
                 {
                     return await _baseResponse.CustomErroMessage("Customer creation failed. Try again later!","400");

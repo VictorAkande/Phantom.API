@@ -5,18 +5,20 @@ namespace Phantom.API.Model
     public class Order
     {
         [Key]
-        public int Id { get; set; }
+        public int OrderId { get; set; } 
         [Required]
-        public IFormFile? OrderImage { get; set; }
+        public string? OrderImage { get; set; }
         [Required]
         public string OrderCode { get; set; }
-        public bool? OrderStatus { get; set; }
+        public string? OrderStatus { get; set; }
         [Required]
         public DateTimeOffset DayOfDelivery { get; set; }
         [Required]
-        public DateTimeOffset Date  { get; set; }
+        public DateTimeOffset OrderDate  { get; set; }
         [Required]
         public decimal Price { get; set; }
+
+        public string size { get; set; }
         public int CustomerId { get; set; }
 
     }

@@ -6,5 +6,9 @@ namespace Phantom.API.Model.Dto
     {
         [Required]
         public IFormFile? OrderImage { get; set; }
+        [Required]
+        public string? size { get; set; }
+
+
     }
 }

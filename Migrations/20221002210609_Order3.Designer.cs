@@ -12,8 +12,8 @@ using Phantom.API.Context;
 namespace Phantom.API.Migrations
 {
     [DbContext(typeof(PhantomDbContext))]
-    [Migration("20220903231401_update3")]
-    partial class update3
+    [Migration("20221002210609_Order3")]
+    partial class Order3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,13 +47,13 @@ namespace Phantom.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDefaultPassword")
+                    b.Property<bool?>("IsDefaultPassword")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LastLoginDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset>("LastPasswordChange")
+                    b.Property<DateTimeOffset?>("LastPasswordChange")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset?>("LoginDate")
@@ -64,7 +64,6 @@ namespace Phantom.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OTP")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("OTPExpiry")
@@ -74,11 +73,13 @@ namespace Phantom.API.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReferralId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResetToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("ResetTokenExpiration")
@@ -88,10 +89,9 @@ namespace Phantom.API.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("VerificationToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("VerificationTokenExpiration")
+                    b.Property<DateTimeOffset?>("VerificationTokenExpiration")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("WhatsappNumber")
@@ -101,12 +101,52 @@ namespace Phantom.API.Migrations
                     b.Property<bool>("isAuthorized")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("isVerified")
+                    b.Property<bool?>("isVerified")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Phantom.API.Model.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DayOfDelivery")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("OrderCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("OrderDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("OrderImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -41,8 +41,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<PhantomDbContext>(x => x.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IBaseResponse<object>, BaseResponse<object>>();
+builder.Services.AddScoped<ISMSSender, SMSSender>();
 builder.Services.AddScoped<IUserAccessRepository, UserAccessRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUserAccessService, UserAccessService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 //LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config")); // config nlog
 
