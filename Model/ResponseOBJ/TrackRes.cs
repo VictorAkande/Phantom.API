@@ -1,4 +1,6 @@
-﻿namespace Phantom.API.Model.ResponseOBJ
+﻿using Phantom.API.Model.Dto;
+
+namespace Phantom.API.Model.ResponseOBJ
 {
     public class TrackRes
     {
@@ -10,6 +12,6 @@
         public DateTimeOffset OrderDate { get; set; }
         public decimal Price { get; set; }
         public string size { get; set; }
-        public int CustomerId { get; set; }
+        public CustomerDto Customer { get; set; }
     }
 }

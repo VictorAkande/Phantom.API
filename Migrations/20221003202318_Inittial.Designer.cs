@@ -12,8 +12,8 @@ using Phantom.API.Context;
 namespace Phantom.API.Migrations
 {
     [DbContext(typeof(PhantomDbContext))]
-    [Migration("20221002210609_Order3")]
-    partial class Order3
+    [Migration("20221003202318_Inittial")]
+    partial class Inittial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,7 +146,20 @@ namespace Phantom.API.Migrations
 
                     b.HasKey("OrderId");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Phantom.API.Model.Order", b =>
+                {
+                    b.HasOne("Phantom.API.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }

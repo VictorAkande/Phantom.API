@@ -1,6 +1,7 @@
 ﻿using Phantom.API.Context;
 using Phantom.API.IRepository;
 using Phantom.API.Model;
+using System.Text.RegularExpressions;
 
 namespace Phantom.API.Repository
 {
@@ -70,6 +71,22 @@ namespace Phantom.API.Repository
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public Match ValidateEmail(string email)
+        {
+            try
+            {
+                string _email = email;
+                Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+                Match match = regex.Match(_email);
+                return match;
+            }
+            catch (Exception)
+            {
+
+                return null;
             }
         }
 

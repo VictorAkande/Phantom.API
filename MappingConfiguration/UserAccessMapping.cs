@@ -9,6 +9,7 @@ namespace Phantom.API.MappingConfiguration
         public UserAccessMapping()
         {
             CreateMap<Customer, RegisterCustomerDto>().ReverseMap();
+            CreateMap<Customer, CustomerDto>().ReverseMap();
         }
     }
 }

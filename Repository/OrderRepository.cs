@@ -77,7 +77,7 @@ namespace Phantom.API.Repository
             try
             {
 
-                var order = await _context.Orders.Where(o => o.OrderCode == orderCode).FirstOrDefaultAsync();
+                var order = await _context.Orders.Where(o => o.OrderCode == orderCode).Include(c => c.Customer).FirstOrDefaultAsync();
 
                 if (order != null)
                 {

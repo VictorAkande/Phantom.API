@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Humanizer;
 using NLog;
+using Phantom.API.Common.Enums;
 using Phantom.API.Common.Helpers;
 using Phantom.API.IRepository;
 using Phantom.API.IServices;
@@ -45,12 +46,12 @@ namespace Phantom.API.Services
                 var order = new Order()
                 {
                     OrderCode = await _orderRepository.GeneraterRandomValue(6),
-                    CustomerId = 1,
                     OrderDate = DateTime.Now,
                     Price = 7000,
                     DayOfDelivery = DateTime.Now.AddDays(8),
-                    OrderStatus = "processing",
+                    OrderStatus = OrderStatus.AwaitingPaymentVerification,
                     size = size,
+                    CustomerId = 1 //static for now 
                 };
 
                 order.OrderImage = $"Phantom-{DateTime.Now.Year}-{order.OrderCode}-" + orderImage?.FileName;
@@ -93,17 +94,18 @@ namespace Phantom.API.Services
             //check if tracking code exist
             var CodeExist = _orderRepository.CheckOrderByID(orderCode);
 
-            if (CodeExist == false || orderCode.Length < 6)
+            if (CodeExist == false || orderCode?.Length < 6)
                 return await _baseResponse.CustomErroMessage("Invalid Tracking Code", "400");
 
             //fetch order details
             var orderDetails = await _orderRepository.GetOrderDetailsByOrderCode(orderCode);
+            if (orderDetails == null)
+            {
+                return await _baseResponse.InternalServerError();
+            }
             var details = _mapper.Map<TrackRes>(orderDetails);
 
             details.DeliveryDay = orderDetails.DayOfDelivery.Humanize();
-
-
-
             return await _baseResponse.SuccessMessage("200", details);
 
         }

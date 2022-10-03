@@ -144,7 +144,20 @@ namespace Phantom.API.Migrations
 
                     b.HasKey("OrderId");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Phantom.API.Model.Order", b =>
+                {
+                    b.HasOne("Phantom.API.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }

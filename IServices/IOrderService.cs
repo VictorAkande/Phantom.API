@@ -6,6 +6,6 @@ namespace Phantom.API.IServices
     {
         Task<BaseResponseVm<object>> MakeOrder(IFormFile? orderImage, string size);
         Task<BaseResponseVm<object>> TrackOrder(string? orderCode);
-
+        Task CancelOrder(string? orderCode);
     }
 }

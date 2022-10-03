@@ -2,7 +2,7 @@
 
 namespace Phantom.API.Model
 {
-    public class Customer:AuthorizationRoot
+    public class Customer : AuthorizationRoot
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -10,7 +10,7 @@ namespace Phantom.API.Model
         public string WhatsappNumber { get; set; } = string.Empty;
         public string Email { get; set; }
         public string? VerificationToken { get; set; }
-        public string? ResetToken { get; set; }= string.Empty;
+        public string? ResetToken { get; set; } = string.Empty;
         public string? OTP { get; set; } = string.Empty;
         public DateTimeOffset OTPExpiry { get; set; }
         public DateTimeOffset? ResetTokenExpiration { get; set; }
@@ -26,6 +26,7 @@ namespace Phantom.API.Model
 
         //public long AgentAccountId { get; set; }
         //public virtual AgentAccount AgentAccount { get; set; }
+
 
 
     }

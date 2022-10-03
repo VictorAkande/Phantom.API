@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Phantom.API.Common.Helpers;
-using Phantom.API.Context;
 using Phantom.API.IRepository;
 using Phantom.API.IServices;
 using Phantom.API.Model;
@@ -15,7 +14,7 @@ namespace Phantom.API.Services
         private readonly IBaseResponse<object> _baseResponse;
         private readonly IMapper _mapper;
 
-        public UserAccessService( IUserAccessRepository accessRepository, IBaseResponse<object> baseResponse, IMapper mapper)
+        public UserAccessService(IUserAccessRepository accessRepository, IBaseResponse<object> baseResponse, IMapper mapper)
 
         {
             _accessRepository = accessRepository;
@@ -31,12 +30,18 @@ namespace Phantom.API.Services
         {
             try
             {
+                //check if email is in the right format
+                var EmailValidate = _accessRepository.ValidateEmail(model.Email);
+
+                if (!EmailValidate.Success)
+                    return await _baseResponse.CustomErroMessage("Invalid Email", "400");
+
                 //check if email or number already exist
                 var EmailExist = _accessRepository.EmailExist(model.Email);
 
                 if (EmailExist)
                 {
-                    return await _baseResponse.CustomErroMessage("Email already Exist","400");
+                    return await _baseResponse.CustomErroMessage("Email already Exist", "400");
                 }
 
                 //check if Number exist
@@ -44,7 +49,7 @@ namespace Phantom.API.Services
 
                 if (NumberExist)
                 {
-                    return await _baseResponse.CustomErroMessage("PhoneNumber already Exist","400");
+                    return await _baseResponse.CustomErroMessage("PhoneNumber already Exist", "400");
                 }
 
 
@@ -70,10 +75,10 @@ namespace Phantom.API.Services
 
                 if (saveuser == null)
                 {
-                    return await _baseResponse.CustomErroMessage("Customer creation failed. Try again later!","400");
+                    return await _baseResponse.CustomErroMessage("Customer creation failed. Try again later!", "400");
                 }
 
-                return await _baseResponse.CustomErroMessage("Registration Successful.","201");
+                return await _baseResponse.CustomErroMessage("Registration Successful.", "201");
 
 
             }

@@ -44,27 +44,22 @@ namespace Phantom.API.Controllers
             {
                 return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
             }
-
-
             var createOrder = await _orderService.TrackOrder(model.OrderCode);
-
-            return StatusCode(201, createOrder);
+            return StatusCode(int.Parse(createOrder.code), createOrder);
         }
 
         [HttpPost]
         [Route("CancelOrder")]
-        public async Task<IActionResult> CancelOrder([FromBody] string orderCode)
+        public async Task<IActionResult> CancelOrder([FromBody] TrackOrderDto model)
         {
 
-            if (orderCode == null || !ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
             {
                 return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
             }
+            var createOrder = await _orderService.CancelOrder(model.OrderCode);
 
-
-            var createOrder = await _orderService.TrackOrder(orderCode);
-
-            return StatusCode(201, createOrder);
+            return StatusCode(200, createOrder);
         }
     }
 }

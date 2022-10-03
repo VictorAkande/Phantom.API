@@ -35,7 +35,7 @@
                 {
                     code = "500",
                     Successful = false,
-
+                    Message = "Internal Server Error"
 
                 };
 
