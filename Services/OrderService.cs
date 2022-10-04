@@ -49,7 +49,7 @@ namespace Phantom.API.Services
                     OrderDate = DateTime.Now,
                     Price = 7000,
                     DayOfDelivery = DateTime.Now.AddDays(8),
-                    OrderStatus = OrderStatus.AwaitingPaymentVerification,
+                    OrderStatus = nameof(OrderStatus.AwaitingPaymentVerification),
                     size = size,
                     CustomerId = 1 //static for now 
                 };
@@ -91,25 +91,66 @@ namespace Phantom.API.Services
 
         public async Task<BaseResponseVm<object>> TrackOrder(string? orderCode)
         {
-            //check if tracking code exist
-            var CodeExist = _orderRepository.CheckOrderByID(orderCode);
-
-            if (CodeExist == false || orderCode?.Length < 6)
-                return await _baseResponse.CustomErroMessage("Invalid Tracking Code", "400");
-
-            //fetch order details
-            var orderDetails = await _orderRepository.GetOrderDetailsByOrderCode(orderCode);
-            if (orderDetails == null)
+            try
             {
+                //check if tracking code exist
+                var CodeExist = await _orderRepository.CheckOrderByID(orderCode);
+
+                if (CodeExist == false || orderCode?.Length < 6)
+                    return await _baseResponse.CustomErroMessage("Invalid Tracking Code", "400");
+
+                //fetch order details
+                var orderDetails = await _orderRepository.GetOrderDetailsByOrderCode(orderCode);
+                if (orderDetails == null)
+                {
+                    return await _baseResponse.InternalServerError();
+                }
+                var details = _mapper.Map<TrackRes>(orderDetails);
+
+                details.DeliveryDay = orderDetails.DayOfDelivery.Humanize();
+                return await _baseResponse.SuccessMessage("200", details);
+            }
+            catch (Exception)
+            {
+
                 return await _baseResponse.InternalServerError();
             }
-            var details = _mapper.Map<TrackRes>(orderDetails);
-
-            details.DeliveryDay = orderDetails.DayOfDelivery.Humanize();
-            return await _baseResponse.SuccessMessage("200", details);
 
         }
 
+        public async Task<BaseResponseVm<object>> CancelOrder(string? orderCode)
+        {
+            try
+            {
+                //check if tracking code exist
+                var CodeExist = await _orderRepository.CheckOrderByID(orderCode);
 
+                if (CodeExist == false || orderCode?.Length < 6)
+                    return await _baseResponse.CustomErroMessage("Invalid Tracking Code", "400");
+
+                //check order status
+
+                var status = await _orderRepository.CheckOrderStausByID(orderCode);
+
+                if (status)
+                {
+                    return await _baseResponse.CustomErroMessage("Order Already Canceled", "200");
+                }
+
+                var cancelOrder = await _orderRepository.CancelOrder(orderCode);
+
+                if (!cancelOrder)
+                {
+                    return await _baseResponse.InternalServerError();
+                }
+
+                return await _baseResponse.Success($"Order with Code: {orderCode} Cancelled Successfully!");
+            }
+            catch (Exception Ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

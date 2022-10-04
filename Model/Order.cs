@@ -11,7 +11,10 @@ namespace Phantom.API.Model
         public string? OrderImage { get; set; }
         [Required]
         public string OrderCode { get; set; }
-        public OrderStatus? OrderStatus { get; set; }
+
+        [Required]
+        [EnumDataType(typeof(OrderStatus))]
+        public string OrderStatus { get; set; }
         [Required]
         public DateTimeOffset DayOfDelivery { get; set; }
         [Required]

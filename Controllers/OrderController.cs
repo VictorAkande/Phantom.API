@@ -57,9 +57,9 @@ namespace Phantom.API.Controllers
             {
                 return StatusCode(400, await _baseResponse.CustomErroMessage("400", "Paramaeters Cannot be Empty"));
             }
-            var createOrder = await _orderService.CancelOrder(model.OrderCode);
+            var CancelOrder = await _orderService.CancelOrder(model.OrderCode);
 
-            return StatusCode(200, createOrder);
+            return StatusCode(200, CancelOrder);
         }
     }
 }

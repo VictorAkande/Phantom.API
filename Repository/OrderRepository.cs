@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Phantom.API.Common.Enums;
 using Phantom.API.Context;
 using Phantom.API.IRepository;
 using Phantom.API.Model;
@@ -14,9 +15,23 @@ namespace Phantom.API.Repository
             _context = context;
         }
 
+        public async Task<bool> CancelOrder(string? orderCode)
+        {
+            try
+            {
+                var order = _context.Orders.Single(o => o.OrderCode == orderCode);
+                order.OrderStatus = nameof(OrderStatus.Canceled);
+                var update = await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
 
-        public bool CheckOrderByID(string? orderCode)
+        public Task<bool> CheckOrderByID(string? orderCode)
         {
             try
             {
@@ -24,10 +39,30 @@ namespace Phantom.API.Repository
 
                 if (order != null)
                 {
-                    return true;
+                    return Task.FromResult(true);
                 }
 
-                return false;
+                return Task.FromResult(false);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> CheckOrderStausByID(string? orderCode)
+        {
+            try
+            {
+                var checkStatus = await _context.Orders.Where(o => o.OrderCode == orderCode && o.OrderStatus == nameof(OrderStatus.Canceled)).FirstOrDefaultAsync();
+
+                if (checkStatus != null)
+                {
+                    return await Task.FromResult(true);
+                }
+                return await Task.FromResult(false);
+
             }
             catch (Exception)
             {
@@ -47,7 +82,7 @@ namespace Phantom.API.Repository
                 await _context.Orders.AddAsync(order);
                 _context.SaveChanges();
 
-                return order;
+                return await Task.FromResult(order).ConfigureAwait(false);
 
             }
             catch (Exception)

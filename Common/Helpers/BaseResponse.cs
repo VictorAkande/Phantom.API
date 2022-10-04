@@ -11,8 +11,6 @@
                     code = code,
                     Successful = false,
                     Message = msg,
-
-
                 };
 
                 return Task.FromResult(res);
@@ -36,6 +34,27 @@
                     code = "500",
                     Successful = false,
                     Message = "Internal Server Error"
+
+                };
+
+                return Task.FromResult(res);
+            }
+            catch (System.Exception)
+            {
+
+                return Task.FromResult(new BaseResponseVm<T>());
+            }
+        }
+
+        public Task<BaseResponseVm<T>> Success(string msg)
+        {
+            try
+            {
+                var res = new BaseResponseVm<T>()
+                {
+                    code = "200",
+                    Successful = true,
+                    Message = msg
 
                 };
 

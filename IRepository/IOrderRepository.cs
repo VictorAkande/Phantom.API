@@ -6,8 +6,10 @@ namespace Phantom.API.IRepository
     {
         Task<Order> CreateOrderAsync(Order order);
         Task<string> GeneraterRandomValue(int length);
-        bool CheckOrderByID(string? orderCode);
+        Task<bool> CheckOrderByID(string? orderCode);
         //Task<Order> GetOrderDetailsByOrderCode(string? orderCode);
         Task<Order> GetOrderDetailsByOrderCode(string? orderCode);
+        Task<bool> CheckOrderStausByID(string? orderCode);
+        Task<bool> CancelOrder(string? orderCode);
     }
 }
