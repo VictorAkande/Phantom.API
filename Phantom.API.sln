@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phantom.API", "Phantom.API.csproj", "{C3D29453-006B-493B-9FE8-12B3A9AA6134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoCart.API", "GoCart.API.csproj", "{C3D29453-006B-493B-9FE8-12B3A9AA6134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

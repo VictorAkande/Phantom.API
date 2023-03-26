@@ -8,7 +8,8 @@ namespace Phantom.API.Model
         public string Name { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string WhatsappNumber { get; set; } = string.Empty;
-        public string Email { get; set; }
+        public string? Email { get; set; }
+        public bool isBusiness { get; set; }
         public string? VerificationToken { get; set; }
         public string? ResetToken { get; set; } = string.Empty;
         public string? OTP { get; set; } = string.Empty;
